@@ -12,7 +12,7 @@ inputs:
   github-token:
     description: The GitHub token used to create an authenticated client
     default: ${{ github.token }}
-    required: false
+    required: true
     # default: '${{ secrets.GITHUB_TOKEN }}'
   # milliseconds:
   #   description: 'Your input description here'
@@ -21,7 +21,7 @@ inputs:
 
 # Define your outputs here.
 outputs:
-  time:
+  results:
     description: 'Your output description here'
 
 runs:
