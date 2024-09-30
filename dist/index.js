@@ -29298,16 +29298,17 @@ if (!githubToken) {
 const github = (0, github_1.getOctokit)(githubToken);
 async function postToPull() {
     try {
-        // Get the existing comments.
+        // Retrieve the existing comments on the PR
         const { data: comments } = await github.rest.issues.listComments({
             owner: github_1.context.repo.owner,
             repo: github_1.context.repo.repo,
             issue_number: github_1.context.issue.number
         });
-        // Find any comment already made by the bot.
+        // Identify a comment made by the bot (replace with actual bot's user ID)
         const botComment = comments.find(comment => comment.user?.id === 41898282);
         const commentBody = `Hello from actions/github-script! (${github_1.context.sha})`;
         if (botComment) {
+            // Update existing comment
             await github.rest.issues.updateComment({
                 owner: github_1.context.repo.owner,
                 repo: github_1.context.repo.repo,
@@ -29316,6 +29317,7 @@ async function postToPull() {
             });
         }
         else {
+            // Create a new comment
             await github.rest.issues.createComment({
                 owner: github_1.context.repo.owner,
                 repo: github_1.context.repo.repo,

@@ -1,26 +1,27 @@
-import * as core from '@actions/core';
-import { context, getOctokit } from '@actions/github';
+import * as core from '@actions/core'
+import { context, getOctokit } from '@actions/github'
 
-const githubToken = core.getInput('github_token');
+const githubToken = core.getInput('github_token')
 if (!githubToken) {
-  throw new Error('GITHUB_TOKEN is not provided');
+  throw new Error('GITHUB_TOKEN is not provided')
 }
-const github = getOctokit(githubToken);
+const github = getOctokit(githubToken)
 
 export async function postToPull(): Promise<void> {
   try {
-    // Get the existing comments.
+    // Retrieve the existing comments on the PR
     const { data: comments } = await github.rest.issues.listComments({
       owner: context.repo.owner,
       repo: context.repo.repo,
       issue_number: context.issue.number
     })
 
-    // Find any comment already made by the bot.
+    // Identify a comment made by the bot (replace with actual bot's user ID)
     const botComment = comments.find(comment => comment.user?.id === 41898282)
     const commentBody = `Hello from actions/github-script! (${context.sha})`
 
     if (botComment) {
+      // Update existing comment
       await github.rest.issues.updateComment({
         owner: context.repo.owner,
         repo: context.repo.repo,
@@ -28,6 +29,7 @@ export async function postToPull(): Promise<void> {
         body: commentBody
       })
     } else {
+      // Create a new comment
       await github.rest.issues.createComment({
         owner: context.repo.owner,
         repo: context.repo.repo,
