@@ -57,7 +57,7 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 0
+          github_token: ${{ github.token }}
 
       - name: Print Output
         id: output
