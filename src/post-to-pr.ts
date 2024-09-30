@@ -1,7 +1,11 @@
-import * as core from '@actions/core'
-import { context, getOctokit } from '@actions/github'
+import * as core from '@actions/core';
+import { context, getOctokit } from '@actions/github';
 
-const github = getOctokit(core.getInput('github_token'))
+const githubToken = core.getInput('github_token');
+if (!githubToken) {
+  throw new Error('GITHUB_TOKEN is not provided');
+}
+const github = getOctokit(githubToken);
 
 export async function postToPull(): Promise<void> {
   try {

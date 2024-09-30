@@ -11,8 +11,8 @@ branding:
 inputs:
   github_token:
     description: 'Your input description here'
-    required: false
-    default: '${{ secrets.GITHUB_TOKEN }}'
+    required: true
+    # default: '${{ secrets.GITHUB_TOKEN }}'
   # milliseconds:
   #   description: 'Your input description here'
   #   required: true

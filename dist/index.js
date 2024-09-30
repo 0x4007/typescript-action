@@ -29291,7 +29291,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.postToPull = postToPull;
 const core = __importStar(__nccwpck_require__(2186));
 const github_1 = __nccwpck_require__(5438);
-const github = (0, github_1.getOctokit)(core.getInput('github_token'));
+const githubToken = core.getInput('github_token');
+if (!githubToken) {
+    throw new Error('GITHUB_TOKEN is not provided');
+}
+const github = (0, github_1.getOctokit)(githubToken);
 async function postToPull() {
     try {
         // Get the existing comments.
