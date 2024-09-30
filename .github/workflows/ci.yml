@@ -58,8 +58,8 @@ jobs:
       - name: Test Local Action
         id: test-action
         uses: ./
-        # with:
-        #   github-token: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print Output
         id: output
