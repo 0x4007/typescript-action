@@ -3,7 +3,7 @@ import { context, getOctokit } from '@actions/github'
 
 const github = getOctokit(core.getInput('github_token'))
 
-export async function postToPull() {
+export async function postToPull(): Promise<void> {
   try {
     // Get the existing comments.
     const { data: comments } = await github.rest.issues.listComments({
