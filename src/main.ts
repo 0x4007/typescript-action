@@ -1,4 +1,4 @@
-import { postToPull } from './post-to-pr'
+import { postToPull } from "./post-to-pr";
 // import { wait } from './wait'
 
 /**
@@ -6,7 +6,7 @@ import { postToPull } from './post-to-pr'
  * @returns {Promise<void>} Resolves when the action is complete.
  */
 export async function run(): Promise<void> {
-  return await postToPull()
+  return await postToPull();
   // const ms: string = core.getInput('milliseconds')
 
   // // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true

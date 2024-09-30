@@ -1,9 +1,12 @@
 {
-  "name": "typescript-action",
+  "name": "plugin-template",
   "description": "GitHub Actions TypeScript template",
   "version": "0.0.0",
-  "author": "",
-  "private": true,
+  "author": "Ubiquity DAO",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.10.0"
+  },
   "homepage": "https://github.com/actions/typescript-action",
   "repository": {
     "type": "git",
@@ -20,9 +23,6 @@
   "exports": {
     ".": "./dist/index.js"
   },
-  "engines": {
-    "node": ">=21"
-  },
   "scripts": {
     "pre-commit": "run-s format:write test package",
     "bundle": "npm run format:write && npm run package",
@@ -35,9 +35,21 @@
     "package:watch": "npm run package -- --watch",
     "test": "npx jest",
     "all": "npm run format:write && npm run lint && npm run test && npm run coverage && npm run package",
-    "prepare": "husky"
+    "prepare": "husky",
+    "_": "_",
+    "_start": "tsx build/esbuild-server.ts",
+    "_build": "tsx build/esbuild-build.ts",
+    "_format": "run-s format:lint format:prettier format:cspell",
+    "_format:lint": "eslint --fix .",
+    "_format:prettier": "prettier --write .",
+    "_format:cspell": "cspell **/*",
+    "_knip": "knip --config .github/knip.ts",
+    "_knip-ci": "knip --no-exit-code --reporter json --config .github/knip.ts",
+    "_prepare": "husky install",
+    "_test": "jest --setupFiles dotenv/config --coverage",
+    "_cy:open": "cypress open",
+    "_cy:run": "cypress run"
   },
-  "license": "MIT",
   "jest": {
     "preset": "ts-jest",
     "verbose": true,
@@ -60,16 +72,37 @@
     "coverageReporters": [
       "json-summary",
       "text",
-      "lcov"
+      "lcov",
+      "clover"
     ],
     "collectCoverage": true,
     "collectCoverageFrom": [
       "./src/**"
-    ]
+    ],
+    "roots": [
+      "./tests"
+    ],
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "mocks"
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "./test-results/jest",
+          "outputName": "results.xml"
+        }
+      ],
+      "jest-md-dashboard"
+    ],
+    "coverageDirectory": "coverage"
   },
   "dependencies": {
     "@actions/core": "^1.10.1",
-    "@actions/github": "^6.0.0"
+    "@actions/github": "^6.0.0",
+    "dotenv": "^16.4.4"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
@@ -89,6 +122,37 @@
     "prettier": "^3.3.3",
     "prettier-eslint": "^16.3.0",
     "ts-jest": "^29.2.5",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.2",
+    "@cspell/dict-node": "^4.0.3",
+    "@cspell/dict-software-terms": "^3.3.18",
+    "@cspell/dict-typescript": "^3.1.2",
+    "@mswjs/data": "0.16.1",
+    "cspell": "^8.4.0",
+    "cypress": "13.6.6",
+    "esbuild": "^0.20.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-filename-rules": "^1.3.1",
+    "eslint-plugin-sonarjs": "^0.24.0",
+    "jest-junit": "^16.0.0",
+    "jest-md-dashboard": "0.8.0",
+    "knip": "^5.0.1",
+    "lint-staged": "^15.2.2",
+    "tsx": "^4.7.1"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "yarn prettier --write",
+      "eslint --fix"
+    ],
+    "src/**.{ts,json}": [
+      "cspell"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }
