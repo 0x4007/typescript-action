@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import { context, getOctokit } from '@actions/github'
 
-const githubToken = core.getInput('github_token')
+const githubToken = core.getInput('github-token', {required: true})
 if (!githubToken) {
   throw new Error('GITHUB_TOKEN is not provided')
 }

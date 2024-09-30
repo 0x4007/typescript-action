@@ -9,9 +9,10 @@ branding:
 
 # Define your inputs here.
 inputs:
-  github_token:
-    description: 'Your input description here'
-    required: true
+  github-token:
+    description: The GitHub token used to create an authenticated client
+    default: ${{ github.token }}
+    required: false
     # default: '${{ secrets.GITHUB_TOKEN }}'
   # milliseconds:
   #   description: 'Your input description here'
