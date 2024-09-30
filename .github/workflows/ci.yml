@@ -3,6 +3,7 @@ name: 'Post Comment on PR'
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+  workflow_dispatch:
 
 permissions:
   contents: read
