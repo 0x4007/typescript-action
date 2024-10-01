@@ -14,7 +14,8 @@
     "strict": true,
     "skipLibCheck": true,
     "newLine": "lf",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["jest", "node"] /* Specify type package names to be included without being referenced in a source file. */,
   },
   "exclude": ["./dist", "./node_modules", "./__tests__", "./coverage"]
 }
