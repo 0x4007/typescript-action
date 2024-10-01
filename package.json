@@ -15,14 +15,10 @@
   "bugs": {
     "url": "https://github.com/actions/typescript-action/issues"
   },
-  "keywords": [
-    "actions",
-    "node",
-    "setup"
-  ],
   "exports": {
     ".": "./dist/index.js"
   },
+  "main": "dist/index.js",
   "scripts": {
     "pre-commit": "run-s format:write test package",
     "bundle": "npm run format:write && npm run package",
@@ -30,7 +26,7 @@
     "coverage": "npx make-coverage-badge --output-path ./badges/coverage.svg",
     "format:write": "npx prettier --write .",
     "format:check": "npx prettier --check .",
-    "lint": "npx eslint . -c ./.github/linters/.eslintrc.yml",
+    "format:lint": "npx eslint . -c ./.github/linters/.eslintrc.yml --fix",
     "package": "npx ncc build src/index.ts -o dist --source-map --license licenses.txt",
     "package:watch": "npm run package -- --watch",
     "_test": "npx jest",
@@ -40,14 +36,13 @@
     "_start": "tsx build/esbuild-server.ts",
     "_build": "tsx build/esbuild-build.ts",
     "format": "run-s format:lint format:prettier format:cspell",
-    "format:lint": "eslint --fix .",
-    "format:prettier": "prettier --write .",
     "format:cspell": "cspell **/*",
-    "knip": "knip --config .github/knip.ts",
-    "knip-ci": "knip --no-exit-code --reporter json --config .github/knip.ts",
     "test": "jest --setupFiles dotenv/config --coverage",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "knip": "knip --config .github/knip.ts",
+    "knip-ci": "knip --no-exit-code --reporter json --config .github/knip.ts",
+    "worker": "wrangler dev --env dev --port 4000"
   },
   "jest": {
     "preset": "ts-jest",
@@ -101,7 +96,12 @@
   "dependencies": {
     "@actions/core": "^1.10.1",
     "@actions/github": "^6.0.0",
-    "dotenv": "^16.4.4"
+    "dotenv": "^16.4.4",
+    "@octokit/rest": "20.1.1",
+    "@octokit/webhooks": "13.2.7",
+    "@sinclair/typebox": "0.32.33",
+    "@ubiquity-dao/ubiquibot-logger": "^1.3.0",
+    "typebox-validators": "0.3.5"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
@@ -138,8 +138,18 @@
     "jest-md-dashboard": "0.8.0",
     "knip": "^5.0.1",
     "lint-staged": "^15.2.2",
-    "tsx": "^4.7.1"
+    "tsx": "^4.7.1",
+    "@eslint/js": "9.5.0",
+    "eslint-plugin-check-file": "2.8.0",
+    "wrangler": "3.60.3"
   },
+  "keywords": [
+    "typescript",
+    "template",
+    "dao",
+    "ubiquity",
+    "open-source"
+  ],
   "lint-staged": {
     "*.ts": [
       "yarn prettier --write",
